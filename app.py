@@ -13,7 +13,7 @@ import json
 import requests
 import re
 from html.parser import HTMLParser
-
+import os , errno
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -27,7 +27,14 @@ LYRICS_ERROR_MSG = 'Lyrics not found. use /help for more info.'
 LYRICS_WAITING_MSG = 'Looking up lyrics for the song you requested. Please wait.'
 USAGE_MSG = 'Usage: Song name - Artist (Ex : Lose Yourself - Eminem)'
 BOT_TAG = '\n\n[Looking for more lyrics?](https://telegram.me/pedistestbot)'
+USER_TAG = '@Pedistestbot'
 
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError as e: # this would be "except OSError, e:" before Python 2.6
+        if e.errno != errno.ENOENT: # errno.ENOENT = no such file or directory
+            raise # re-raise exception if a different error occurred
 def correct(nameOrg):
             # grab html
             name = urllib.parse.quote_plus(nameOrg)
@@ -128,8 +135,18 @@ def lyrics(bot, update):
         else :
             lyrics = data['lyric']
             #print (lyrics)
-            update.message.reply_text(lyrics+BOT_TAG,parse_mode=ParseMode.MARKDOWN)
-
+            if len(lyrics) < 4000:
+                #print(len(lyrics))
+                #print(len(BOT_TAG))
+                update.message.reply_text(lyrics+BOT_TAG,parse_mode=ParseMode.MARKDOWN)
+            else:
+                #print(len(lyrics))
+                update.message.reply_text('lyrics length exceeds Telegram\'s message length limitaions.\nSending a file instead...')
+                fileName = songName.replace('%20','-') +'.txt'
+                with open(fileName, "w") as text_file:
+                    print(lyrics, file=text_file)
+                update.message.reply_document(document=open(fileName, 'rb'),caption=BOT_TAG+'\n'+USER_TAG,parse_mode=ParseMode.MARKDOWN)
+                silentremove(fileName)
     except (IndexError, ValueError):
         update.message.reply_text('Usage: songname - artist name')
         logger.warning('Update "%s" caused error, update')
