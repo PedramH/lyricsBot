@@ -25,7 +25,7 @@ BASE_LYRICS_URL = 'http://lyric-api.herokuapp.com/api/find/'
 SLASH = '/'
 LYRICS_ERROR_MSG = 'Lyrics not found. use /help for more info.'
 LYRICS_WAITING_MSG = 'Looking up lyrics for the song you requested. Please wait.'
-USAGE_MSG = 'Usage: Song name - Artist (Ex : Lose Yourself - Eminem)'
+USAGE_MSG = 'Usage: Song name - Artist (Ex : Lose Yourself - hey)'
 BOT_TAG = '\n\n[Looking for more lyrics?](https://telegram.me/engLyricsFinderbot)'
 USER_TAG = '@engLyricsFinderbot'
 
@@ -160,8 +160,8 @@ def error(bot, update, error):
 def main():
     """Start the bot."""
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("572076500:AAGBEQig_qcNY1gL0mjMH0pEKS1OU8KBOcI")
-
+    #updater = Updater("572076500:AAGBEQig_qcNY1gL0mjMH0pEKS1OU8KBOcI")
+    updater = Updater("564292532:AAHyKNyLC69zyEMOtGAEDi5TaE1IeM_gaMo")
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
