@@ -39,7 +39,8 @@ def correct(nameOrg):
             # grab html
             name = urllib.parse.quote_plus(nameOrg)
             html = get_page('http://www.google.com/search?hl=en&q=' + name + '&meta=&gws_rd=ssl')
-            
+            logger.info('name: %s, nameOrg: %s ',name,nameOrg)
+
             
             html_parser = HTMLParser()
 
@@ -161,8 +162,8 @@ def error(bot, update, error):
 def main():
     """Start the bot."""
     # Create the EventHandler and pass it your bot's token.
-    #updater = Updater("572076500:AAGBEQig_qcNY1gL0mjMH0pEKS1OU8KBOcI")
-    updater = Updater("564292532:AAHyKNyLC69zyEMOtGAEDi5TaE1IeM_gaMo")
+    updater = Updater("572076500:AAGBEQig_qcNY1gL0mjMH0pEKS1OU8KBOcI")
+    #updater = Updater("564292532:AAHyKNyLC69zyEMOtGAEDi5TaE1IeM_gaMo")
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
