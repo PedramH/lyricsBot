@@ -39,7 +39,7 @@ def correct(nameOrg):
             # grab html
             name = urllib.parse.quote_plus(nameOrg)
             html = get_page('http://www.google.com/search?hl=en&q=' + name + '&meta=&gws_rd=ssl')
-            logger.info('name: %s, nameOrg: %s /n %s',name,nameOrg,html)
+            logger.info('name: %s, nameOrg: %s',name,nameOrg,)
 
             
             html_parser = HTMLParser()
@@ -50,12 +50,9 @@ def correct(nameOrg):
             # pull pieces out
             match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?>(.*?)</a>', html)
             if match:
-                if len(match.group(1)) > 250:
-                        fix = nameOrg
-                else:
-                        fix = match.group(1)
-                        fix = re.sub(r'<.*?>', '', fix)
-                        fix = html_parser.unescape(fix)
+                fix = match.group(1)
+                fix = re.sub(r'<.*?>', '', fix)
+                fix = html_parser.unescape(fix)
             else:
                 fix = nameOrg
                 print ('Im Here')
