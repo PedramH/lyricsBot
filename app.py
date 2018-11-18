@@ -39,7 +39,7 @@ def correct(nameOrg):
             # grab html
             name = urllib.parse.quote_plus(nameOrg)
             html = get_page('http://www.google.com/search?hl=en&q=' + name + '&meta=&gws_rd=ssl')
-            logger.info('name: %s, nameOrg: %s ',name,nameOrg)
+            logger.info('name: %s, nameOrg: %s /n %s',name,nameOrg,html)
 
             
             html_parser = HTMLParser()
@@ -56,9 +56,11 @@ def correct(nameOrg):
                         fix = match.group(1)
                         fix = re.sub(r'<.*?>', '', fix)
                         fix = html_parser.unescape(fix)
-
+            else:
+                fix = nameOrg
+                print ('Im Here')
             # return result
-            #print (fix)
+            print (fix)
             return fix
 
 def get_page(url):
