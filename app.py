@@ -48,12 +48,13 @@ def correct(nameOrg):
 
             # pull pieces out
             match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?>(.*?)</a>', html)
-            if len(match.group(1)) > 250:
-                    fix = nameOrg
-            else:
-                    fix = match.group(1)
-                    fix = re.sub(r'<.*?>', '', fix)
-                    fix = html_parser.unescape(fix)
+            if match:
+                if len(match.group(1)) > 250:
+                        fix = nameOrg
+                else:
+                        fix = match.group(1)
+                        fix = re.sub(r'<.*?>', '', fix)
+                        fix = html_parser.unescape(fix)
 
             # return result
             #print (fix)
